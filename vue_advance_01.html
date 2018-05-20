@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0">
+    <title>VueDevtools--vue开发调试工具</title>
+    <!--<script src="vue2.0.js"></script>-->
+    <!--引入vue2.0+开发板的CDN资源-->
+    <script src="https://unpkg.com/vue@2.3.3/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <input @keyup="calculate"
+           type="text"
+           v-model="augend"
+    >
+    <span>+</span>
+    <input @keyup="calculate"
+           type="text"
+           v-model="addend"
+    >
+    <span>=</span>
+    <input type="text"
+           :value="sum"
+    >
+    <br>
+    <br>
+    <button @click="reset">清空数据</button>
+</div>
+<script>
+    const app=new Vue({
+        el:"#app",
+        data:{
+            augend:'',
+            addend:'',
+            sum:'',
+        },
+        methods:{
+            calculate() {
+                this.sum = Number(this.augend)
+                            +
+                            Number(this.addend);
+            },
+            reset(){
+                this.sum = this.augend=this.addend='';
+                this.$emit('reset');
+            },
+        }
+    });
+</script>
+</body>
+</html>

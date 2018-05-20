@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initail-scale=1.0,maximum-scale=1.0">
+    <title> vue-route </title>
+    <script src="vue2.0.js"></script>
+    <script src="vue-router.js"></script>
+    <!--CDN引入-->
+    <!--<script src="https://unpkg.com/vue-router@2.5.3/dist/vue-router.js"></script>-->
+    <!--vue的单页面应用是基于路由和组件的-->
+    <!--两个新组建***<router-link/>和<router-view/>*******-->
+</head>
+<body>
+<div id="app">
+    <!--左侧导航栏区域-->
+    <div class="nav">
+        <!--<a>简易VUE</a>-->
+        <!--<a>趣味ES6</a>-->
+        <!--<a>人在职场</a>-->
+        <!--通过router-link组件来导航，通过传入'to'属性指定链接-->
+        <router-link to="/vue">简易VUE</router-link>
+        <router-link to="/es6">趣味es6</router-link>
+        <router-link to="/career">人在职场</router-link>
+    </div>
+    <!--右侧内容区域-->
+    <div class="content">
+        <!--匹配到的组件将渲染在这里-->
+        <router-view></router-view>
+    </div>
+</div>
+<script>
+//    <!--定义路由对应的组件-->
+//语法很简单，用json对象的形式定义，至于template属性对应的内容，
+// 就是将会被替换渲染到 <router-view/> 组件的内容了
+
+//1.简易vue对应的视图组件
+    const vueComponent={
+        template:'<div>这是《简易vue》教程</div>'
+    };
+//    2.趣味es6对应的视图组件
+    const es6Component={
+        template:'<div>这里是《趣味es6》教程</div>'
+    };
+//    3.人在职场 对应的视图组件
+    const careerComponent={
+        template:'<div>这是《人在职场》</div>'
+    }
+
+
+//    *********-----------创建router实例，并定义导航和组件的映射关系-----------*******
+    const router=new VueRouter({
+//        配置routes
+//        注：语法，routes的值是个数组类型，数组中每个元素是对象类型
+        routes:[
+//            定义3个导航和组件的映射关系
+            {
+                path:"/vue",
+                component:vueComponent
+            },
+            {
+                path:"/es6",
+                component:es6Component
+            },
+            {
+                path:"/career",
+                component:careerComponent
+            },
+
+        ]
+    })
+//    *********-----------创建VUE实例，通过配置router参数来注入刚刚定义好的router路由-----------*******
+const app=new Vue({
+    el:"#app",
+    router  //此处是es6语法，相当于router:router
+})
+
+</script>
+</body>
+</html>
