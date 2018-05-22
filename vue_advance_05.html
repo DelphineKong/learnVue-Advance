@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0">
+    <title>Vuex的3个核心概念</title>
+    <script src="vue2.0.js"></script>
+    <script src="vuex.js"></script>
+    <!--
+    回购Vuex两大优点：
+    1、状态存储是响应式的
+    2、不能随意修改Vuex的状态
+    -->
+</head>
+<body>
+
+<script>
+    //
+    <!--使用Vuex要创建一个实例store仓库来对状态进行管理-->
+    const store = new Vuex.Store({});
+</script>
+
+<!--wwwwwwwwwwwwwwwww--核心概念01--state--wwwwwwwwwwwwwwwwwwwww-->
+<script>
+    <!--创建一个store-->
+    const store = new Vuex.Store({
+//        state存储应用层的状态
+        state: {
+            count: 5  //总数：5
+        }
+    })
+</script>
+
+<!--wwwwwwwwwwwwwwwww--核心概念02--getters--wwwwwwwwwwwwwwwwwwwww-->
+<script>
+    <!--
+    eg:当需要在data的基础上再派生一些状态的时候, 就会使用computed来实现-->
+    <!--
+    需要从state中派生出一些状态的时候, 就会使用到getters , 可以将getters理解state的计算属性-->
+    <!--getters接受 state作为其第一个参数-->
+    const store = new Vuex.Store({
+//    state存储应用层的状态
+        state: {
+            count: 5   //总数：5
+        },
+        //派生出来的状态
+        getters: {
+            //ES6的箭头函数语法
+            newCount: state => state.count * 3,
+            //相当于
+            //传统语法
+            newCount: function (state) {
+                return state.count * 3;
+            }
+            //在state.count的基础上派生出一个新的状态newCount出来，就适合使用 getters
+        }
+    })
+</script>
+
+<!--wwwwwwwwwwwwwwwww--核心概念03--Mutations--wwwwwwwwwwwwwwwwwwwww-->
+<script>
+    <!--Vuex给我们提供修改仓库 store 中的状态的唯一办法就是通过提交mutation-->
+    //    定义一个mutations  和上面的getters，会接受 state 作为第一个参数：
+    const store = new Vuex.Store({
+            //state存储应用层的状态
+            state: {
+                count: 5   //总数：5
+            },
+            //更改store状态的唯一途径
+            mutations: {
+                increment(store) {
+                    state.count++;
+                }
+            },
+        })
+        //如何使用mutations
+        //Vuex要求我们要想通过 mutations 更改内容，就必须提交mutation
+        //提交一个名为increment的mutations
+        store.commit('increment');
+    //提交commit时候，字符串参数increment,就是对应在 mutations 中的increment
+    //store.commit( ) 还接受其他额外的参数，比如：
+
+    const store = new Vuex.Store({
+        //state存储应用层的状态
+        state: {
+            count: 5   //总数：5
+        },
+        //更改store状态的唯一途径
+        mutations: {
+            increment(state, n) {
+                state.count += n;
+            }
+        },
+    })
+    store.commit('increment',10);
+
+
+</script>
+</body>
+</html>

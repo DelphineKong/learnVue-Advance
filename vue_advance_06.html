@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0">
+    <title>Vuex实现一个简单的网页设计</title>
+    <script src="vue2.0.js"></script>
+    <script src="vuex.js"></script>
+    <style>
+        body {
+            background-color: #efefef;
+            padding: 0;
+            margin: 0;
+        }
+
+        .result {
+            font-size: 29px;
+            text-align: right;
+            margin-top: 248px;
+        }
+
+        .enter {
+            font-size: 22px;
+            text-align: right;
+            margin-right: 6px;
+        }
+
+        .keys {
+            background-color: white;
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+            margin: 0 auto;
+        }
+
+        .list {
+            margin: 0 auto;
+
+        }
+
+        .key {
+            width: 24.9%;
+            height: 88px;
+            line-height: 88px;
+            /*border: .1px solid #cccccc;*/
+            box-shadow: 0 0 0.1px #cccccc;
+            text-align: center;
+            font-size: 22px;
+            display: inline-block;
+            /*float: left;*/
+        }
+
+        .key:first-child {
+            color: orange;
+        }
+
+        .key:last-child {
+            background-color: #fc4705;
+            color: white;
+        }
+        .key:hover{
+            background-color: #eeeeee;
+        }
+        .key:last-child:hover{
+            background-color: rgba(252, 71, 5, 0.71);
+        }
+
+    </style>
+</head>
+<body>
+<!--Vuex适合在较为大型复杂的项目中使用。
+在实际开发过程中，简单的计算器也许只算得上是一个简单的小项目，完全可以不用Vuex来实现。
+所以，以下演示的案例只作为demo来讲解Vuex，学习Vuex的用法，不代表在实际开发中的做法-->
+<!--简单计算器包含简单的加、减、乘、除运算，和一个清空数据的按钮-->
+<!--项目分析：
+一、结果result和输入值enter,跟每个组件相关联，将result和enter作为应用层的状态（全局数据）处理
+就会简单的使用到Vuex提供的仓库store.
+二、每个键盘的按键，可以封装成一个个自定义的组件：<keyboard/>
+-->
+<div id="app">
+    <div class="result">运算结果</div>
+    <div class="enter">输入的值</div>
+    <div class="keys">
+        <div class="list">
+            <!--键盘区域-->
+            <keyboard v-for="item in keys" :value="item"></keyboard>
+        </div>
+    </div>
+</div>
+
+<script>
+    const store = new Vuex.Store({
+        state: {
+            result: "",//运算结果
+            enter: "" //输入的值
+        }
+    });
+    //自定义 keyboard 组件
+    Vue.component('keyboard', {
+        //接受的参数value,代表键盘的值
+        props: ['value'],
+        //模板
+        template: '<div :data-value="value" class="key">{{value}}</div>'
+    });
+    //创建Vue实例
+    const app = new Vue({
+        //挂载元素
+        el: "#app",
+        data: {
+            //16个按键的值
+            keys: [
+                'clear', '+', '-', '*',
+                '7', '8', '9', '/',
+                '4', '5', '6', '0',
+                '1', '2', '3', '=',
+            ]
+        }
+
+    })
+
+</script>
+</body>
+</html>
